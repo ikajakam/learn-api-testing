@@ -23,7 +23,6 @@ A hands-on API hacking lab built with Python & Flask — learn and practice expl
 - 🧠 **/api/form?id=0** — Interesting `id=0` behavior (custom logic).
 - ⚠️ **/api/form?id=X** — Test IDOR & XSS via form viewer.
 - 📦 **/view-form?id=X** — Stored XSS rendered on page.
-- 🔎 **Request Logs** — Every request is logged with IP, method, headers, etc.
 #
 # Get an Access Token (cURL Format)
 ### Use these curl commands in your terminal to register and login :
@@ -95,7 +94,7 @@ python3 app_formsubmit.py
 - By default, the app runs on: `http://127.0.0.1:5000`
 
 -   `uploads/` folder will be created automatically
--   Logs are saved to `app.log`
+-   Logs are saved to `app.log`. **Request Logs** — Every request is logged with IP, method, headers, etc.
 -   Ensure write access to working directory
 
 
