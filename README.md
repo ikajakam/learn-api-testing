@@ -2,7 +2,7 @@
 
 
 ## This is a deliberately vulnerable app built for learning.
-Welcome to this custom-built Python & Flask CTF lab designed for students, beginners and pentesters to practice authentication, XSS, IDOR, JWT, SQLi, file upload, and other web security flaws — all in one app.
+A hands-on API hacking lab built with Flask — learn and practice exploiting real-world bugs like XSS, SQLi, JWT abuse, IDOR, and more in one breakable app.
 
 ## TEST LIVE  https://tarkash.surapura.in/
 
