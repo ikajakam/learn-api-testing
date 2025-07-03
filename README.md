@@ -4,7 +4,7 @@
 ## This is a deliberately vulnerable app built for learning.
 A hands-on API hacking lab built with Python & Flask — learn and practice exploiting real-world bugs like XSS, SQLi, JWT abuse, IDOR, Authentication and more in one breakable app.
 
-## TEST LIVE  https://tarkash.surapura.in/
+## Start Breaking https://tarkash.surapura.in/
 
 ![Made for Learning](https://img.shields.io/badge/made%20for-learning-blueviolet) ![API Security](https://img.shields.io/badge/focus-API%20Security-yellowgreen)  ![Python](https://img.shields.io/badge/built%20with-Python%20%26%20Flask-3776AB) ![CTF](https://img.shields.io/badge/type-CTF-informational)
 
