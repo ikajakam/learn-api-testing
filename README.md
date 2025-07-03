@@ -1,4 +1,4 @@
-# Vulnerable Web App for Pentesters 
+# API Playground — Practice JWT, SQLi, XSS & IDOR
 
 ## Check LIVE >> https://tarkash.surapura.in/
 
@@ -6,8 +6,7 @@
 Welcome to this custom-built Python & Flask CTF lab designed for students, beginners, and pentesters to practice authentication, XSS, IDOR, JWT, SQLi, file upload, and other web security flaws — all in one app.
 
 
-## 🚀 Endpoints to Explore
-
+##  🚀 Explore
 - 🧾 **/api/register** — Create a user account (safe).
 - 🔐 **/api/login** — Auth via secure JWT (in-memory) and vulnerable SQL-based login.
 - 📤 **/api/upload** — Upload files with checks.
@@ -15,9 +14,9 @@ Welcome to this custom-built Python & Flask CTF lab designed for students, begin
 - ⚠️ **/api/form?id=X** — Test IDOR & XSS via form viewer.
 - 📦 **/view-form?id=X** — Stored XSS rendered on page.
 - 🔎 **Request Logs** — Every request is logged with IP, method, headers, etc.
-
-## Get an Access Token (cURL Format)
-- Use these curl commands in your terminal to register and login :
+#
+# Get an Access Token (cURL Format)
+### Use these curl commands in your terminal to register and login :
 
 ### Register a new user
 
@@ -91,3 +90,4 @@ python3 app_formsubmit.py
 
 
 #### will update more vulnerable routes - suggestions are welcome
+
