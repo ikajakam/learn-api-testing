@@ -94,7 +94,7 @@ python3 app_formsubmit.py
 ```bash
 nohup python3 app_formsubmit.py &
 ```
-- By default, the app runs on: `http://127.0.0.1:5000`
+### By default, the app runs on: http://127.0.0.1:5000
 
 -   `uploads/` folder will be created automatically
 -   Logs are saved to `app.log`.
