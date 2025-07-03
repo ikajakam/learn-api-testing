@@ -97,7 +97,7 @@ nohup python3 app_formsubmit.py &
 ### By default, the app runs on: http://127.0.0.1:5000
 
 -   `uploads/` folder will be created automatically
--   Logs are saved to `app.log`.
+-   Logs are saved to `app.log`
 -   Request Logs - Every request is logged with IP, method, headers, etc.
 -   Ensure write access to working directory
 
