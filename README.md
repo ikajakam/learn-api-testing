@@ -2,7 +2,7 @@
 
 
 ## This is a deliberately vulnerable app built for learning.
-A hands-on API hacking lab built with Flask — learn and practice exploiting real-world bugs like XSS, SQLi, JWT abuse, IDOR, and more in one breakable app.
+A hands-on API hacking lab built with Python & Flask — learn and practice exploiting real-world bugs like XSS, SQLi, JWT abuse, IDOR, and more in one breakable app.
 
 ## TEST LIVE  https://tarkash.surapura.in/
 
