@@ -34,7 +34,7 @@ curl -X POST https://tarkash.surapura.in/api/login \\
      -d '{"username": "masino", "password": "tamburo"}'
 ```
 #### The response will look like:
-- ```bash
+```bash
   {"token":"your-jwt-token"}
   ```
 - Save the token. Use it as a Bearer token for all other requests.
