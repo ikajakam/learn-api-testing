@@ -65,7 +65,9 @@ curl -X POST "https://tarkash.surapura.in/api/upload" \\
 - Step 5: Visit /view-form?id=1 to render and trigger your payload (stored XSS)
 
 POP that XSS
+
 Submit form with id=0
+
 #
 # HOW TO RUN
 
