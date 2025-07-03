@@ -1,4 +1,4 @@
-# API Playground — Practice JWT, SQLi, XSS & IDOR
+# API Playground - Practice JWT, SQLi, XSS & IDOR
 
 
 ## This is a deliberately vulnerable app built for learning.
