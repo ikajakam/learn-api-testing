@@ -88,3 +88,6 @@ python3 app_formsubmit.py
 -   `uploads/` folder will be created automatically
 -   Logs are saved to `app.log`
 -   Ensure write access to working directory
+
+
+#### will update more vulnerable routes - suggestions are welcome
