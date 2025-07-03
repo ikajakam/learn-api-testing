@@ -100,7 +100,7 @@ nohup python3 app_formsubmit.py &
 -   Logs are saved to `app.log`
 -   Request Logs - Every request is logged with IP, method, headers, etc.
 -   Ensure write access to working directory
-
+- `pkill python` to stop app
 
 #### will update more vulnerable routes - suggestions are welcome
 
