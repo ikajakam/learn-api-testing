@@ -64,8 +64,8 @@ curl -X POST "https://tarkash.surapura.in/api/upload" \\
 - Step 4: View / Edit submitted forms via /api/form?id=1 and exploit IDOR and stored XSS
 - Step 5: Visit /view-form?id=1 to render and trigger your payload (stored XSS)
 
-POP that XSS
-Submit form with id=0
+##### POP that XSS
+##### Submit form with id=0
 
 #
 # HOW TO RUN
