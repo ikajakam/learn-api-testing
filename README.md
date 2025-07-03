@@ -7,6 +7,7 @@ Welcome to this custom-built Python & Flask CTF lab designed for students, begin
 ## TEST LIVE  https://tarkash.surapura.in/
 
 ![Made for Learning](https://img.shields.io/badge/made%20for-learning-blueviolet) ![API Security](https://img.shields.io/badge/focus-API%20Security-yellowgreen)  ![Python](https://img.shields.io/badge/built%20with-Python%20%26%20Flask-3776AB) ![CTF](https://img.shields.io/badge/type-CTF-informational)
+
 ![XSS](https://img.shields.io/badge/XSS-red) ![SQLi](https://img.shields.io/badge/SQLi-orange) ![JWT](https://img.shields.io/badge/JWT-blue) ![IDOR](https://img.shields.io/badge/IDOR-lightgrey) ![File Upload](https://img.shields.io/badge/Authentication-cyan) ![File Upload](https://img.shields.io/badge/File%20Upload-critical)
 
 
