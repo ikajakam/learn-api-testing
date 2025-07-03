@@ -1,0 +1,203 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Learn API testing with practical cURL examples and hands-on vulnerable APIs. Ideal for pentesters and developers exploring JWT, form submissions, and XSS testing." />
+  <meta name="keywords" content="API testing, pentesting, curl, JWT, XSS, web security, vulnerable app, learn API, ethical hacking" />
+  <meta name="author" content="Surapura Psyber Technologies" />
+
+  <!-- Open Graph for Social Sharing -->
+  <meta property="og:title" content="Learn API Testing - Hands-on Web Security Lab" />
+  <meta property="og:description" content="Hands-on vulnerable API testing lab with cURL examples, JWT handling, and XSS practice." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://tarkash.surapura.in/" />
+  <meta property="og:image" content="https://tarkash.surapura.in/og-image.png" />
+
+  <!-- Twitter Card Metadata -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Learn API Testing - Hands-on Web Security Lab" />
+  <meta name="twitter:description" content="Practical API testing and security practice with JWT, XSS, IDOR, and more." />
+  <meta name="twitter:image" content="https://tarkash.surapura.in/og-image.png" />
+
+  <title>Learn API Testing - Web Security Hands-on Guide</title>
+  <link rel="icon" href="/favicon.ico" type="image/x-icon">
+
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://tarkash.surapura.in/"
+  },
+  "headline": "Learn API Testing - Hands-on Web Security Lab",
+  "description": "Hands-on vulnerable API testing lab with cURL examples, JWT handling, and XSS practice.",
+  "image": "https://tarkash.surapura.in/og-image.png",
+  "author": {
+    "@type": "Organization",
+    "name": "Surapura Psyber Technologies"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Surapura Psyber Technologies",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://surapura.in/logo.png"
+    }
+  },
+  "datePublished": "2024-05-07",
+  "dateModified": "2024-05-07"
+}
+</script>
+
+
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      background-color: #0b0b0b;
+      color: #ededed;
+      font-size: 18px;
+      font-family: Arial, sans-serif;
+    }
+
+    h1 {
+      font-size: 24px;
+      letter-spacing: 1px;
+    }
+
+    li {
+      line-height: 1.6;
+    }
+
+    code, pre {
+      background-color: #3b2880;
+      color: #E2E2E2;
+      padding: 1px 8px;
+      border-radius: 3px;
+      font-size: 18px;
+      line-height: 1.6;
+      font-family: monospace;
+    }
+
+    pre {
+      display: inline-block;
+      margin: 5px 0;
+    }
+
+    a {
+      color: #F87312;
+      font-weight: bold;
+    }
+
+    hr {
+      border-top: 1px solid #000;
+    }
+
+    main {
+      flex: 1;
+      padding: 7px;
+    }
+
+    footer {
+      background-color: #0a0a0a;
+      padding: 15px 0;
+      text-align: center;
+      color: #F87312;
+    }
+
+    .img-row {
+      display: flex;
+      gap: 20px;
+      margin: 20px 0;
+      flex-wrap: wrap;
+    }
+
+    .img-row img {
+      max-width: 49%;
+      height: auto;
+      border: 1px solid #333;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Learn API Testing!</h1>
+    <p>This is a deliberately vulnerable app built for learning.</p>
+    <hr style='width: 100%'>
+
+    <section>
+      <h2>🔐 Get an Access Token (cURL Format)</h2>
+      <p>&gt;&gt; Use these <code>curl</code> commands in your terminal to register and login :</p>
+
+      <p># Register a new user</p>
+      <pre>
+curl -X POST https://tarkash.surapura.in/api/register \\
+     -H "Content-Type: application/json" \\
+     -d '{"username": "masino", "password": "tamburo"}'
+      </pre>
+      <br><br>
+      <p># Login to get JWT token</p>
+      <pre>
+curl -X POST https://tarkash.surapura.in/api/login \\
+     -H "Content-Type: application/json" \\
+     -d '{"username": "masino", "password": "tamburo"}'
+      </pre>
+
+      <p>&gt; The response will look like:</p>
+      <pre>
+{"token":"your-jwt-token"}
+      </pre>
+      <p>&gt; Save the token. Use it as a Bearer token for all other requests.</p>
+      <br>
+      <p># Submit a Form (Find the special id=0 flag!)</p>
+      <pre>
+curl -X PUT "https://tarkash.surapura.in/api/form?id=0" \\
+     -H "Authorization: Bearer YOUR_JWT_TOKEN_HERE" \\
+     -H "Content-Type: application/json" \\
+     -d '{"username":"masino","name":"tamburo","email":"bhootnike","message":"ben no bablo"}'
+      </pre>
+
+      <p>&gt; Explore and tamper with id=0. Understand response logic, bypasses, and constraints</p>
+      <br>
+      <p># File Upload Endpoint</p>
+      <pre>
+curl -X POST "https://tarkash.surapura.in/api/upload" \\
+     -H "Content-Type: application/json" \\
+     -H "Authorization: Bearer YOUR_JWT_TOKEN_HERE" \\
+     -F "file=@/path/to/your/file.jpg"
+      </pre>
+
+      <p>&gt; Visit: https://tarkash.surapura.in/uploads/yourfile.jpg</p>
+    </section>
+    <br>
+    <section>
+      <h2>🧠 Practice Flow</h2>
+      <ul>
+        <li>Step 1: Register at <code>https://tarkash.surapura.in/api/register</code> with a JSON body like <code>{"username": "test", "password": "pass"}</code></li>
+          <li>Step 2: Login via <code>/api/login</code> and receive your JWT token</li>
+          <li>Step 3: Submit a form with a <code>message</code> field to <code>/api/form</code></li>
+          <li>Step 4: View / Edit submitted forms via <code>/api/form?id=1</code> and exploit IDOR and stored XSS</li>
+          <li>Step 5: Visit <code>/view-form?id=1</code> to render and trigger your payload (stored XSS)</li>
+      </ul>
+      <p>&gt; POP that XSS</p>
+      <p>&gt; submit form with id=0</p>
+    </section>
+
+
+    <hr style='width: 100%' />
+    <p>Need help solving or have a query? Contact:
+      <a href="https://x.com/mechanisedbeat" target="_blank">ikajakam</a>
+    </p>
+  </main>
+
+  <footer>
+    <a href="https://surapura.in/" target="_blank" style="color: #F87312; text-decoration: none; font-weight: 200;">
+      Surapura Psyber Technologies
+    </a>
+  </footer>
+</body>
+</html>
