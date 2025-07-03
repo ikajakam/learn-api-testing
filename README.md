@@ -3,7 +3,7 @@
 ## Check LIVE >> https://tarkash.surapura.in/
 
 ## This is a deliberately vulnerable app built for learning.
-Welcome to this custom-built CTF lab designed for students, beginners, and pentesters to practice authentication, XSS, IDOR, JWT, SQLi, file upload, and other web security flaws — all in one app.
+Welcome to this custom-built Python & Flask CTF lab designed for students, beginners, and pentesters to practice authentication, XSS, IDOR, JWT, SQLi, file upload, and other web security flaws — all in one app.
 
 
 ## 🚀 Endpoints to Explore
