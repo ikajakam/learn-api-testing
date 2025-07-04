@@ -65,19 +65,27 @@ curl -X POST "https://tarkash.surapura.in/api/upload" \\
 ```
 - /uploads/yourfile.jpg
 
-# Proxy with Burp
+# Proxy with Burp ![](https://img.shields.io/badge/Burp%20Proxy--orange?logo=burpsuite&logoColor=orange)
+
+Intercept, inspect and replay API calls from **WSL** or **Kali** through **Burp Suite**.
+
 ```bash
 curl --proxy http://172.26.16.1:8080 -X POST https://tarkash.surapura.in/api/register \
   -H "Content-Type: application/json" \
   -d '{"username": "attacker", "password": "password123"}'
   ```
-  - open `proxy settings` in Burp
-  - add new listeners `wsl ip` `virtual kali ip` with port 8080
+Make sure to:
+- Add a new listener on:
+  -- **WSL IP** (e.g. `172.26.16.1`)
+  --  Or **Kali VM IP** if testing cross-VM
+  --  Use **port 8080** (or another as configured)
   
-  ## Step-by-Step to Trust Burp's Certificate in WSL & kali
+  ## Trust Burp CA in WSL or Kali (for HTTPS)
 ###  Export cert from Burp in .DER format
+- Go to: `Burp > Proxy > Proxy settings > Import / Export CA`
+- Export as **`.DER` format**
 
- #### Convert the DER cert to CRT format
+ #### Convert DER to CRT
 ```bash
 openssl x509 -inform DER -in ~/<cert file name> -out ~/burp.crt
 ```
@@ -85,10 +93,12 @@ openssl x509 -inform DER -in ~/<cert file name> -out ~/burp.crt
 ```bash
 sudo cp ~/burp.crt /usr/local/share/ca-certificates/
 ```
- #### Update CA store
+ #### Update trusted certs
 ```bash
 sudo update-ca-certificates
 ```
+Once done, `curl` and other CLI tools will trust Burp for HTTPS interception.
+
 
 
 ## Practice Flow
