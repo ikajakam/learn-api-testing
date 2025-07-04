@@ -65,7 +65,7 @@ curl -X POST "https://tarkash.surapura.in/api/upload" \\
 ```
 - /uploads/yourfile.jpg
 
-# Proxy with Burp ![](https://img.shields.io/badge/Burp%20Proxy--orange?logo=burpsuite&logoColor=orange)
+# Proxy with Burp ![](https://img.shields.io/badge/Burp--orange?logo=burpsuite&logoColor=orange)
 
 Intercept, inspect and replay API calls from **WSL** or **Kali** through **Burp Suite**.
 
