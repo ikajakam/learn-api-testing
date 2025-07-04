@@ -65,6 +65,32 @@ curl -X POST "https://tarkash.surapura.in/api/upload" \\
 ```
 - /uploads/yourfile.jpg
 
+## Proxy with Burp
+```bash
+curl --proxy http://172.26.16.1:8080 -X POST https://tarkash.surapura.in/api/register \
+  -H "Content-Type: application/json" \
+  -d '{"username": "attacker", "password": "password123"}'
+  ```
+  - open `proxy settings` in Burp
+  - add new listeners `wsl ip` `virtual kali ip` with port 8080
+  
+  ## Step-by-Step to Trust Burp's Certificate in WSL & kali
+###  Export cert from Burp in .DER format
+
+ #### Convert the DER cert to CRT format
+```bash
+openssl x509 -inform DER -in ~/<cert file name> -out ~/burp.crt
+```
+ #### Copy to system trusted certs
+```bash
+sudo cp ~/burp.crt /usr/local/share/ca-certificates/
+```
+ #### Update CA store
+```bash
+sudo update-ca-certificates
+```
+
+
 ## Practice Flow
 - Step 1: Register at https://tarkash.surapura.in/api/register with a JSON body like {"username": "test", "password": "pass"}
 - Step 2: Login via /api/login and receive your JWT token
