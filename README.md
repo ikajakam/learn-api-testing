@@ -79,21 +79,21 @@ Make sure to:
   -- **WSL IP** (e.g. `172.26.16.1`)
   --  Or **Kali VM IP** if testing cross-VM
   --  Use **port 8080** (or another as configured)
-  
-  ## Trust Burp CA in WSL or Kali (for HTTPS)
+
+## Trust Burp CA in WSL or Kali (for HTTPS)
 ###  Export cert from Burp in .DER format
 - Go to: `Burp > Proxy > Proxy settings > Import / Export CA`
 - Export as **`.DER` format**
 
- #### Convert DER to CRT
+#### Convert DER to CRT
 ```bash
 openssl x509 -inform DER -in ~/<cert file name> -out ~/burp.crt
 ```
- #### Copy to system trusted certs
+#### Copy to system trusted certs
 ```bash
 sudo cp ~/burp.crt /usr/local/share/ca-certificates/
 ```
- #### Update trusted certs
+#### Update trusted certs
 ```bash
 sudo update-ca-certificates
 ```
