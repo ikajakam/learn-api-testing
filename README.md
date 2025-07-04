@@ -8,7 +8,7 @@ A hands-on API hacking lab built with Python & Flask — learn and practice expl
 
 ![Made for Learning](https://img.shields.io/badge/made%20for-learning-blueviolet) ![API Security](https://img.shields.io/badge/focus-API%20Security-yellowgreen)  ![Python](https://img.shields.io/badge/built%20with-Python%20%26%20Flask-3776AB) ![CTF](https://img.shields.io/badge/type-CTF-informational)
 
-![XSS](https://img.shields.io/badge/XSS-red) ![SQLi](https://img.shields.io/badge/SQLi-orange) ![JWT](https://img.shields.io/badge/JWT-blue) ![IDOR](https://img.shields.io/badge/IDOR-lightgrey) ![File Upload](https://img.shields.io/badge/Authentication-cyan) ![File Upload](https://img.shields.io/badge/File%20Upload-critical)
+![XSS](https://img.shields.io/badge/XSS-red) ![SQLi](https://img.shields.io/badge/SQLi-orange) ![JWT](https://img.shields.io/badge/JWT-blue) ![IDOR](https://img.shields.io/badge/IDOR-lightgrey) ![Authentication](https://img.shields.io/badge/Authentication-cyan) ![File Upload](https://img.shields.io/badge/File%20Upload-critical)
 
 
 
@@ -65,7 +65,7 @@ curl -X POST "https://tarkash.surapura.in/api/upload" \\
 ```
 - /uploads/yourfile.jpg
 
-## Proxy with Burp
+# Proxy with Burp
 ```bash
 curl --proxy http://172.26.16.1:8080 -X POST https://tarkash.surapura.in/api/register \
   -H "Content-Type: application/json" \
