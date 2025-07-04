@@ -75,9 +75,8 @@ curl --proxy http://172.26.16.1:8080 -X POST https://tarkash.surapura.in/api/reg
   -d '{"username": "attacker", "password": "password123"}'
   ```
 ### Make sure to : 
-- Add a new listener : 
-- WSL IP 
-- KALI VM IP
+- Add a new proxy listener : 
+- `WSL IP` or `KALI VM IP`
 - Use port 8080 (or another as configured)
 
 ## Trust Burp CA in WSL or Kali (for HTTPS)
