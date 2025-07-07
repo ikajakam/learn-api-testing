@@ -66,7 +66,7 @@ curl -X POST "https://tarkash.surapura.in/api/upload" \\
 - /uploads/yourfile.jpg
 
 ### Try to change another user’s password (admin as well)
-Let’s say masino is user ID 8 :
+Let’s say `masino` is `user ID 8` :
 ```bash
 curl -X POST "https://tarkash.surapura.in/api/change-password \
   -H "Authorization: Bearer YOUR_JWT_TOKEN_HERE" \
