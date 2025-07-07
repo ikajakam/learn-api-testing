@@ -110,7 +110,16 @@ def register():
 
     hashed_password = generate_password_hash(password)
     users_db[username] = hashed_password
-    return jsonify({"message": "User registered successfully!"}), 201
+
+    # Also store in sqlite with generated ID
+    conn = sqlite3.connect('db.sqlite')
+    cursor = conn.cursor()
+    cursor.execute("INSERT INTO users (username, password) VALUES (?, ?)", (username, password))
+    user_id = cursor.lastrowid
+    conn.commit()
+    conn.close()
+
+    return jsonify({"message": "User registered successfully!", "user_id": user_id}), 201
 
 # 2. Login
 @app.route('/api/login', methods=['POST'])
@@ -322,6 +331,44 @@ def view_form():
     </html>
     """
     return render_template_string(html_template, form_id=form_id, form_data=form_data, message=message)
+
+@app.route('/api/change-password', methods=['POST'])
+def change_password():
+    try:
+        # Auth still required
+        auth_header = request.headers.get('Authorization')
+        if not auth_header or not auth_header.startswith('Bearer '):
+            return jsonify({"error": "Unauthorized"}), 401
+
+        token = auth_header.split(' ')[1]
+        try:
+            jwt.decode(token, app.secret_key, algorithms=["HS256"])
+        except jwt.ExpiredSignatureError:
+            return jsonify({"error": "Token expired"}), 401
+        except jwt.InvalidTokenError:
+            return jsonify({"error": "Invalid token"}), 401
+
+        # Accept any user_id and new_password from request body
+        data = request.get_json()
+        target_user_id = data.get("user_id")
+        new_password = data.get("new_password")
+
+        if not target_user_id or not new_password:
+            return jsonify({"error": "User ID and new password required"}), 400
+
+        # 🐍 SQL Injection / IDOR Demo
+        query = f"UPDATE users SET password='{new_password}' WHERE id={target_user_id}"
+        conn = sqlite3.connect('db.sqlite')
+        cursor = conn.cursor()
+        cursor.execute(query)
+        conn.commit()
+        conn.close()
+
+        return jsonify({"message": f"Password changed for user ID {target_user_id}", "flag": "flag{idor_or_sqli_found}"}), 200
+
+    except Exception as e:
+        logging.error(f"Password Change Error: {e}")
+        return jsonify({"error": "Internal server error"}), 500
 
 if __name__ == '__main__':
     app.run(host='127.0.0.1', port=5000, debug=True)
