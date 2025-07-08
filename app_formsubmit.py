@@ -373,11 +373,12 @@ def change_password():
             return jsonify({"error": "User ID and new password required"}), 400
 
         hashed_password = generate_password_hash(raw_password)
-
         conn = sqlite3.connect('db.sqlite')
         cursor = conn.cursor()
-        query = "UPDATE users SET password = ? WHERE id = ?"
-        cursor.execute(query, (hashed_password, target_user_id))
+        # ⚠️ VULNERABLE TO SQLi – for CTF/demo purposes only
+        query = f"UPDATE users SET password = '{hashed_password}' WHERE id = {target_user_id}"
+        logging.warning(f"[SQLi DEBUG] Executing query: {query}")
+        cursor.execute(query)
         conn.commit()
         conn.close()
 
