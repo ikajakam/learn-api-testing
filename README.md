@@ -89,6 +89,8 @@ curl --proxy http://172.26.16.1:8080 -X POST https://tarkash.surapura.in/api/reg
 - Add a new proxy listener : 
 - `WSL IP` or `KALI VM IP`
 - Use port 8080 (or another as configured)
+![image](https://github.com/user-attachments/assets/129034ec-3323-400c-8b13-88e82ca48e14)
+
 
 ## Trust Burp CA in WSL or Kali (for HTTPS)
 ###  Export cert from Burp in .DER format
