@@ -65,7 +65,7 @@ curl -X POST "https://tarkash.surapura.in/api/upload" \\
 ```
 - /uploads/yourfile.jpg
 
-### Change another user’s password (admin as well)
+### Change other user’s password (admin as well)
 Let’s say `masino` is `user ID 8` :
 ```bash
 curl -X POST "https://tarkash.surapura.in/api/change-password \
