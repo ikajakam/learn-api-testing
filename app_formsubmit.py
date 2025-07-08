@@ -12,7 +12,6 @@ import sqlite3
 conn = sqlite3.connect('db.sqlite', check_same_thread=False)
 cursor = conn.cursor()
 
-
 # --- Custom Formatter for IST Timezone ---
 class ISTFormatter(logging.Formatter):
     converter = lambda *args: datetime.now(pytz.timezone('Asia/Kolkata')).timetuple()
@@ -48,7 +47,7 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
 # In-memory databases (for CTF/demo purposes)
-users_db = {}          # username: password
+# users_db = {}          # username: password
 forms_db = {}          # form_id: form_data
 user_tokens = {}       # username: jwt_token
 request_counter = 0
@@ -90,9 +89,9 @@ def log_request_info():
     logging.info("=================================================================================================")
 
 # JWT token generator
-def generate_token(user_id):
+def generate_token(username):
     expiration = datetime.utcnow() + timedelta(hours=13)
-    return jwt.encode({"user_id": user_id, "exp": expiration}, app.secret_key, algorithm="HS256")
+    return jwt.encode({"username": username, "exp": expiration}, app.secret_key, algorithm="HS256")
 
 # File extension validator
 def allowed_file(filename):
@@ -105,16 +104,21 @@ def register():
     username = data.get('username')
     password = data.get('password')
 
-    if username in users_db:
+    if not username or not password:
+        return jsonify({"error": "Username and password required"}), 400
+
+    conn = sqlite3.connect('db.sqlite')
+    cursor = conn.cursor()
+
+    # Check if user already exists
+    cursor.execute("SELECT id FROM users WHERE username = ?", (username,))
+    existing = cursor.fetchone()
+    if existing:
+        conn.close()
         return jsonify({"error": "User already exists!"}), 400
 
     hashed_password = generate_password_hash(password)
-    users_db[username] = hashed_password
-
-    # Also store in sqlite with generated ID
-    conn = sqlite3.connect('db.sqlite')
-    cursor = conn.cursor()
-    cursor.execute("INSERT INTO users (username, password) VALUES (?, ?)", (username, password))
+    cursor.execute("INSERT INTO users (username, password) VALUES (?, ?)", (username, hashed_password))
     user_id = cursor.lastrowid
     conn.commit()
     conn.close()
@@ -132,37 +136,48 @@ def login():
         if not username or not password:
             return jsonify({"error": "Username and password are required!"}), 400
 
-        # ✅ First try in-memory user auth (safe)
-        if username in users_db:
-            hashed_password = users_db[username]
-            if not check_password_hash(hashed_password, password):
-                return jsonify({"error": "Invalid credentials!"}), 401
-
-            token = generate_token(username)
-            user_tokens[username] = token
-            return jsonify({"token": token}), 200
-
-        # 🔥 Else fallback to raw SQL query (vulnerable to SQLi)
-        query = f"SELECT * FROM users WHERE username = '{username}' AND password = '{password}'"
-
+        # 🔐 Always validate from SQLite
         conn = sqlite3.connect('db.sqlite')
         cursor = conn.cursor()
-        cursor.execute(query)
-        user = cursor.fetchone()
+        cursor.execute("SELECT id, password FROM users WHERE username = ?", (username,))
+        result = cursor.fetchone()
         conn.close()
 
-        if user:
-            return jsonify({
-                "message": "Welcome back via SQL!",
-                "flag": "flag{sqli_login_bypassed}"
-            }), 200
+        if result:
+            user_id, stored_hash = result
+            if check_password_hash(stored_hash, password):
+                token = generate_token(username)
+                return jsonify({"token": token, "user_id": user_id}), 200
+            else:
+                return jsonify({"error": "Invalid credentials!"}), 401
+        else:
+            return jsonify({"error": "Invalid credentials!"}), 401
+
+        # 🔍 Fallback to SQLite with hashed check
+        conn = sqlite3.connect('db.sqlite')
+        cursor = conn.cursor()
+        cursor.execute("SELECT id, password FROM users WHERE username = ?", (username,))
+        result = cursor.fetchone()
+        conn.close()
+
+        if result:
+            user_id, stored_hash = result
+            logging.info(f"[DEBUG] user_id={user_id}, username={username}, DB hash={stored_hash}, Password input={password}")
+
+            if check_password_hash(stored_hash, password):
+                token = generate_token(username)
+                return jsonify({"token": token, "user_id": user_id}), 200
+            else:
+                return jsonify({"error": "Invalid credentials!"}), 401
+
+                token = generate_token(username)
+                return jsonify({"token": token, "user_id": user_id}), 200
         else:
             return jsonify({"error": "Invalid credentials!"}), 401
 
     except Exception as e:
         logging.error(f"Login Error: {e}")
         return jsonify({"error": "Internal server error"}), 500
-
 
 # 3. Submit form (allows ?id=0 to be used)
 from flask import request, jsonify, Response
@@ -335,36 +350,41 @@ def view_form():
 @app.route('/api/change-password', methods=['POST'])
 def change_password():
     try:
-        # Auth still required
         auth_header = request.headers.get('Authorization')
         if not auth_header or not auth_header.startswith('Bearer '):
             return jsonify({"error": "Unauthorized"}), 401
 
         token = auth_header.split(' ')[1]
         try:
-            jwt.decode(token, app.secret_key, algorithms=["HS256"])
+            payload = jwt.decode(token, app.secret_key, algorithms=["HS256"])
         except jwt.ExpiredSignatureError:
             return jsonify({"error": "Token expired"}), 401
         except jwt.InvalidTokenError:
             return jsonify({"error": "Invalid token"}), 401
 
-        # Accept any user_id and new_password from request body
+        changer = payload.get("user_id")
+        logging.info(f"[!] Password change requested by {changer}")
+
         data = request.get_json()
         target_user_id = data.get("user_id")
-        new_password = data.get("new_password")
+        raw_password = data.get("new_password")
 
-        if not target_user_id or not new_password:
+        if not target_user_id or not raw_password:
             return jsonify({"error": "User ID and new password required"}), 400
 
-        # 🐍 SQL Injection / IDOR Demo
-        query = f"UPDATE users SET password='{new_password}' WHERE id={target_user_id}"
+        hashed_password = generate_password_hash(raw_password)
+
         conn = sqlite3.connect('db.sqlite')
         cursor = conn.cursor()
-        cursor.execute(query)
+        query = "UPDATE users SET password = ? WHERE id = ?"
+        cursor.execute(query, (hashed_password, target_user_id))
         conn.commit()
         conn.close()
 
-        return jsonify({"message": f"Password changed for user ID {target_user_id}", "flag": "flag{idor_or_sqli_found}"}), 200
+        return jsonify({
+            "message": f"Password changed for user ID {target_user_id}",
+            "flag": "flag{idor_or_sqli_found}"
+        }), 200
 
     except Exception as e:
         logging.error(f"Password Change Error: {e}")
@@ -372,3 +392,5 @@ def change_password():
 
 if __name__ == '__main__':
     app.run(host='127.0.0.1', port=5000, debug=True)
+
+    # updated 8/7/25
