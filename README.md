@@ -17,12 +17,12 @@ A hands-on API hacking lab built with Python & Flask — learn and practice expl
 
 
 ##   Explore
--   **/api/register** — Create a user account (safe).
--   **/api/login** — Auth via secure JWT (in-memory) and vulnerable SQL-based login.
--   **/api/upload** — Upload files with checks.
--   **/api/form?id=0** — Interesting `id=0` behavior (custom logic).
--   **/api/form?id=X** — Test IDOR & XSS via form viewer.
--   **/view-form?id=X** — Stored XSS rendered on page.
+- 🧾  **/api/register** — Create a user account (safe).
+- 🔐  **/api/login** — Auth via secure JWT (in-memory) and vulnerable SQL-based login.
+- 📤  **/api/upload** — Upload files with checks.
+- 🧠  **/api/form?id=0** — Interesting `id=0` behavior (custom logic).
+- ⚠️  **/api/form?id=X** — Test IDOR & XSS via form viewer.
+- 📦  **/view-form?id=X** — Stored XSS rendered on page.
 #
 # Get an Access Token (cURL Format)
 ### Use these curl commands in your terminal to register and login :
